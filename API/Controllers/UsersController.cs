@@ -3,14 +3,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.Data;
 using API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace API.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class UsersController : ControllerBase
+    public class UsersController : BaseApiController
     {
         private readonly DataContext _context;
         public UsersController(DataContext context)
@@ -19,6 +18,7 @@ namespace API.Controllers
         }
 
         [HttpGet]
+        [AllowAnonymous]
         //return a collection of AppUsers, able to be itterated over. Task allows of async, utilise multithreading.
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
@@ -26,6 +26,7 @@ namespace API.Controllers
 
         }
 
+        [Authorize]
         [HttpGet("{id}")]
         //return an AppUser with a specific Id.
         public async Task<ActionResult<AppUser>> GetUser(int id)
