@@ -41,7 +41,7 @@ export class ErrorInterceptor implements HttpInterceptor {
               break;
 
             case 401:
-              this.toastr.error(error.statusText, error.status);
+              this.toastr.error("Not Authorised", error.status);
               break;
 
             case 404:
